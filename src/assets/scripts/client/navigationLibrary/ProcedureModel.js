@@ -115,12 +115,12 @@ export default class ProcedureModel {
          * Nonstandard spellings may be used to achieve the desired pronunciations,
          * since this is only used for speech synthesis.
          *
-         * @property _name
+         * @property _spoken
          * @type {string}
          * @default ''
          * @private
          */
-        this._name = '';
+        this._spoken = '';
 
         /**
          * The type of instrument procedure (must be one of `PROCEDURE_TYPE`)
@@ -174,8 +174,8 @@ export default class ProcedureModel {
      * @property name
      * @type {string}
      */
-    get name() {
-        return this._name;
+    get spoken() {
+        return this._spoken;
     }
 
     /**
@@ -216,7 +216,7 @@ export default class ProcedureModel {
         this._draw = data.draw;
         this._holdCollection = new HoldCollection(data.holds);
         this._icao = data.icao;
-        this._name = data.name;
+        this._spoken = data.spoken;
         this._altitude = data.altitude;
         this._procedureType = procedureType;
 
@@ -243,7 +243,7 @@ export default class ProcedureModel {
         this._entryPoints = {};
         this._exitPoints = {};
         this._icao = '';
-        this._name = '';
+        this._spoken = '';
         this._procedureType = '';
         this._altitude = null;
 
