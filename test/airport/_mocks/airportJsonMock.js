@@ -212,7 +212,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
     "sids": {
         "BOACH6": {
             "icao": "BOACH6",
-            "name": "Boach Six",
+            "spoken": "Boach Six",
             "altitude": 7000,
             "rwy": {
                 "KLAS01L": [["BESSY", "S230"], ["WITLA", "A100"], "JEBBB"],
@@ -240,7 +240,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         },
         "COWBY6": {
             "icao": "COWBY6",
-            "name": "Cowboy Six",
+            "spoken": "Cowboy Six",
             "rwy": {
                 "KLAS01L": ["_NAPSE068", "NAPSE", ["RIOOS", "A130+"], "COMPS"],
                 "KLAS01R": ["_NAPSE068", "NAPSE", ["RIOOS", "A130+"], "COMPS"],
@@ -266,7 +266,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         },
         "SHEAD9": {
             "icao": "SHEAD9",
-            "name": "Shead Nine",
+            "spoken": "Shead Nine",
             "rwy": {
                 "KLAS01L": [["BESSY", "S230"], ["MDDOG", "A90"], ["TARRK", "A110"]],
                 "KLAS01R": [["BESSY", "S230"], ["MDDOG", "A90"], ["TARRK", "A110"]],
@@ -292,7 +292,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         // Not a real route, used to test soft altitude restrictions
         "TRALR6": {
             "icao": "TRALR6",
-            "name": "Trailer Six",
+            "spoken": "Trailer Six",
             "rwy": {
                 "KLAS01L": ["_NAPSE068", ["NAPSE", "S250-"], "TINNK", "RIOOS"],
                 "KLAS01R": ["_NAPSE068", "NAPSE", "TINNK", ["RIOOS", "A130+"]],
@@ -319,7 +319,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
     "stars": {
         "GRNPA1": {
             "icao": "GRNPA1",
-            "name": "Grandpa One",
+            "spoken": "Grandpa One",
             "entryPoints": {
                 "BETHL": ["BETHL", ["HOLDM", "A270"]],
                 "BCE":   [["BCE", "S310-"]],
@@ -343,7 +343,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         // Not a real route, used to test soft altitude restrictions
         "GRNPA2": {
             "icao": "GRNPA2",
-            "name": "Grandpa Two",
+            "spoken": "Grandpa Two",
             "entryPoints": {
                 "BETHL": ["BETHL", ["HOLDM", "A270+"]],
                 "BCE":   ["BCE"],
@@ -366,7 +366,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         // not a real route. used here to test procedural hold parameters
         "GRNPA8": {
             "icao": "GRNPA8",
-            "name": "Grandpa 8",
+            "spoken": "Grandpa 8",
             "entryPoints": {
                 "DAG": ["DAG", ["MISEN", "A240"]],
                 "TNP": ["TNP", "JOTNU", ["ZELMA", "A310-"]]
@@ -389,7 +389,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         // not a real route. used here to test `SpawnPatternModel._generateWaypointListForRoute()`
         "GRNPA9": {
             "icao": "GRNPA9",
-            "name": "Grandpa One",
+            "spoken": "Grandpa One",
             "entryPoints": {
                 "MLF":   ["MLF"]
             },
@@ -408,7 +408,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         },
         "KEPEC3": {
             "icao": "KEPEC3",
-            "name": "Kepec Three",
+            "spoken": "Kepec Three",
             "entryPoints": {
                 "DAG": ["DAG", ["MISEN", "A240"]],
                 "TNP": ["TNP", "JOTNU", ["ZELMA", "A310-"]]
@@ -427,7 +427,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         },
         "SUNST3": {
             "icao": "SUNST3",
-            "name": "Sunset Three",
+            "spoken": "Sunset Three",
             "entryPoints": {
                 "BTY":   ["BTY"],
                 "TACUS": ["TACUS", "TUMBE"]
@@ -447,7 +447,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         },
         "TYSSN4": {
             "icao": "TYSSN4",
-            "name": "Tyson Four",
+            "spoken": "Tyson Four",
             "entryPoints": {
                 "DRK":   ["DRK", ["IGM", "A240"], ["ZATES", "A190"]],
                 "IGM":   [["IGM", "A240"], ["ZATES", "A190"]],
@@ -469,7 +469,7 @@ export const AIRPORT_JSON_KLAS_MOCK = {
         // not real. a modification of the TYSSN4 with speed restrictions removed.
         "ZIMBO1": {
             "icao": "ZIMBO1",
-            "name": "Zimbo One",
+            "spoken": "Zimbo One",
             "entryPoints": {
                 "DRK": ["DRK", ["IGM", "A240"], ["ZATES", "A190"]]
             },

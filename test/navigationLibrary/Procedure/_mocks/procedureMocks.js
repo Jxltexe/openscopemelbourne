@@ -2,7 +2,7 @@
 export const SID_MOCK = {
     "BOACH6": {
         "icao": "BOACH6",
-        "name": "Boach Six",
+        "spoken": "Boach Six",
         "rwy": {
             "KLAS01L": [["BESSY", "S230"], ["WITLA", "A100"], "JEBBB"],
             "KLAS01R": [["BESSY", "S230"], ["WITLA", "A100"], "JEBBB"],
@@ -33,7 +33,7 @@ export const SID_MOCK = {
 export const STAR_MOCK = {
     "KEPEC1": {
         "icao": "KEPEC1",
-        "name": "Kepec One",
+        "spoken": "Kepec One",
         "entryPoints": {
             "DAG": ["DAG", ["MISEN", "A240"]],
             "TNP": ["TNP", "JOTNU", ["ZELMA", "A310-"]]
