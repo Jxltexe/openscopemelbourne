@@ -541,7 +541,7 @@ export default class LegModel {
     }
 
     /**
-     * Return the name of the procedure being used by this leg
+     * Return the spoken name of the procedure being used by this leg
      *
      * @for LegModel
      * @method getProcedureName
@@ -552,7 +552,7 @@ export default class LegModel {
             return;
         }
 
-        return this._procedureModel.name;
+        return this._procedureModel.spoken;
     }
 
     /**

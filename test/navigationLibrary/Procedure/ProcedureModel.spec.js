@@ -52,7 +52,7 @@ ava('instantiates correctly when given valid SID data', (t) => {
     t.deepEqual(Object.keys(model._exitPoints), expectedExits);
     t.deepEqual(model._draw, SID_MOCK.BOACH6.draw);
     t.true(model._icao === SID_MOCK.BOACH6.icao);
-    t.true(model._name === SID_MOCK.BOACH6.name);
+    t.true(model._spoken === SID_MOCK.BOACH6.spoken);
 });
 
 ava('instantiates correctly when given valid STAR data', (t) => {
@@ -69,7 +69,7 @@ ava('instantiates correctly when given valid STAR data', (t) => {
     t.deepEqual(Object.keys(model._exitPoints), expectedExits);
     t.deepEqual(model._draw, STAR_MOCK.KEPEC1.draw);
     t.true(model._icao === STAR_MOCK.KEPEC1.icao);
-    t.true(model._name === STAR_MOCK.KEPEC1.name);
+    t.true(model._spoken === STAR_MOCK.KEPEC1.spoken);
 });
 
 ava('#draw returns value of #_draw', (t) => {
@@ -88,10 +88,10 @@ ava('#icao returns value of #_icao', (t) => {
     t.true(result === expectedResult);
 });
 
-ava('#name returns value of #_name', (t) => {
+ava('#spoken returns value of #_spoken', (t) => {
     const model = new ProcedureModel(PROCEDURE_TYPE.SID, SID_MOCK.BOACH6);
-    const expectedResult = model._name;
-    const result = model.name;
+    const expectedResult = model._spoken;
+    const result = model.spoken;
 
     t.true(result === expectedResult);
 });

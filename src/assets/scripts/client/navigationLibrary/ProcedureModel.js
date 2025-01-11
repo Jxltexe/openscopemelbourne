@@ -168,10 +168,10 @@ export default class ProcedureModel {
     }
 
     /**
-     * Return value of `#_name`
+     * Return value of `#_spoken`
      *
      * @for ProcedureModel
-     * @property name
+     * @property spoken
      * @type {string}
      */
     get spoken() {
