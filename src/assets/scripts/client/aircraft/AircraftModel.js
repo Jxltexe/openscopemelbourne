@@ -8,7 +8,6 @@ import _isEmpty from 'lodash/isEmpty';
 import _isEqual from 'lodash/isEqual';
 import _isNil from 'lodash/isNil';
 import _uniqueId from 'lodash/uniqueId';
-import AircraftTypeDefinitionModel from './AircraftTypeDefinitionModel';
 import AirportController from '../airport/AirportController';
 import Fms from './FlightManagementSystem/Fms';
 import GameController, { GAME_EVENTS } from '../game/GameController';
@@ -56,6 +55,7 @@ import {
 import {
     degreesToRadians,
     nm,
+    nm_ft,
     UNIT_CONVERSION_CONSTANTS
 } from '../utilities/unitConverters';
 import {
@@ -65,7 +65,8 @@ import {
 import {
     FLIGHT_CATEGORY,
     FLIGHT_PHASE,
-    PERFORMANCE
+    PERFORMANCE,
+    ENGINE_TYPE
 } from '../constants/aircraftConstants';
 import {
     AIRPORT_CONSTANTS,
@@ -157,6 +158,16 @@ export default class AircraftModel {
          * @default ''
          */
         this.flightNumber = '';
+
+        /**
+         * Option to tell aircraft to take off on its own when there is no other traffic on the runway
+         *
+         * @for AircraftModel
+         * @property shouldTakeOffWhenRunwayIsClear
+         * @type boolean
+         * @default false
+         */
+        this.shouldTakeOffWhenRunwayIsClear = false;
 
         /**
          * Trasponder code
@@ -420,24 +431,6 @@ export default class AircraftModel {
         /**
          * Flag used to determine if an aircraft can be removed from the sim.
          *
-         * This tells the `AircraftController` that `AircraftStripView` associated with this
-         * instance is safe to remove. This property should only be changed via the
-         * `.setIsFlightStripRemovable()` method
-         *
-         * The `AircraftModel` will know when conditions are correct for the `StripView`
-         * to be removed, however, only the `AircraftController` has access to an aircraft's
-         * `StripView`.
-         *
-         * @for AircraftModel
-         * @property isRemovable
-         * @type {boolean}
-         * @default false
-         */
-        this.isFlightStripRemovable = false;
-
-        /**
-         * Flag used to determine if an aircraft can be removed from the sim.
-         *
          * This tells the `AircraftController` that this instance is safe to remove.
          * This property should only be changed via the `.setIsRemovable()` method.
          *
@@ -455,16 +448,6 @@ export default class AircraftModel {
         this.relativePositionHistory = [];
 
         this.category = options.category; // 'arrival' or 'departure'
-
-        /**
-         * the following diagram illustrates all allowed mode transitions:
-         *
-         * apron -> taxi -> waiting -> takeoff -> cruise <-> landing
-         *   ^                                       ^
-         *   |                                       |
-         * new planes with                      new planes with
-         * category 'departure'                 category 'arrival'
-         */
 
         // target represents what the pilot makes of the tower's commands. It is
         // most important when the plane is in a 'guided' situation, that is it is
@@ -489,7 +472,7 @@ export default class AircraftModel {
          * @property model
          * @type {AircraftTypeDefinitionModel}
          */
-        this.model = new AircraftTypeDefinitionModel(options.model);
+        this.model = options.model;
 
         /**
          * @for AircraftModel
@@ -529,9 +512,7 @@ export default class AircraftModel {
             this.speed = 0;
         } else if (this.category !== FLIGHT_CATEGORY.ARRIVAL && this.category !== FLIGHT_CATEGORY.OVERFLIGHT) {
             throw new Error('Invalid #category found in AircraftModel');
-        }
-
-        if (this.category !== FLIGHT_CATEGORY.DEPARTURE) {
+        } else {
             const bottomAltitude = this.fms.getBottomAltitude();
             const airportModel = AirportController.airport_get();
             const airspaceCeiling = airportModel.maxAssignableAltitude;
@@ -794,7 +775,7 @@ export default class AircraftModel {
         const rate = this.model.rate.climb;
         const { ceiling } = this.model;
 
-        if (this.model.engines.type === 'J') {
+        if (this.model.engines.type === ENGINE_TYPE.JET) {
             serviceCeilingClimbRate = 500;
         } else {
             serviceCeilingClimbRate = 100;
@@ -1048,12 +1029,12 @@ export default class AircraftModel {
      * @return {boolean}
      */
     isOnGround() {
-        let airportModel = this.fms.departureAirportModel;
-        let runwayModel = this.fms.departureRunwayModel;
-
         if (this.isOverflight()) {
             return false;
         }
+
+        let airportModel = this.fms.departureAirportModel;
+        let runwayModel = this.fms.departureRunwayModel;
 
         if (this.isArrival()) {
             airportModel = this.fms.arrivalAirportModel;
@@ -1110,7 +1091,6 @@ export default class AircraftModel {
             this.flightPhase === FLIGHT_PHASE.WAITING;
     }
 
-    // TODO: The function description and what it actually does do not match
     /**
      * Returns whether the aircraft is currently taking off
      *
@@ -1118,7 +1098,7 @@ export default class AircraftModel {
      * @method isTakeoff
      */
     isTakeoff() {
-        return this.isTaxiing() || this.flightPhase === FLIGHT_PHASE.TAKEOFF;
+        return this.flightPhase === FLIGHT_PHASE.TAKEOFF;
     }
 
     /**
@@ -1138,18 +1118,6 @@ export default class AircraftModel {
         }
 
         return true;
-    }
-
-    /**
-     * Sets `#isFlightStripRemovable` to true
-     *
-     * Provides a single source of change for the value of `#isFlightStripRemovable`
-     *
-     * @for AircraftModel
-     * @method isFlightStripRemovable
-     */
-    setIsFlightStripRemovable() {
-        this.isFlightStripRemovable = true;
     }
 
     /**
@@ -1245,7 +1213,7 @@ export default class AircraftModel {
         let alt_log;
         let alt_say;
 
-        if (this.isArrival()) {
+        if (this.isAirborne()) {
             const altdiff = this.altitude - this.mcp.altitude;
             const alt = digits_decimal(this.altitude, -2);
 
@@ -1271,9 +1239,7 @@ export default class AircraftModel {
                 ],
                 this.pilotVoice
             );
-        }
-
-        if (this.isDeparture()) {
+        } else {
             UiController.ui_log(`${AirportController.airport_get().radio.twr}, ${this.callsign}, ready to taxi`);
             speech_say(
                 [
@@ -1356,7 +1322,7 @@ export default class AircraftModel {
         EventBus.trigger(AIRCRAFT_EVENT.TAKEOFF, this, runway);
 
         this.takeoffTime = TimeKeeper.accumulatedDeltaTime;
-        runway.lastDepartedAircraftCallsign = this.callsign;
+        runway.lastDepartedAircraftModel = this;
     }
 
     /**
@@ -1540,6 +1506,26 @@ export default class AircraftModel {
             }
 
             case FLIGHT_PHASE.WAITING:
+                const iAmTheNextDeparture = this.fms.departureRunwayModel.isAircraftNextInQueue(this.id);
+
+                if (this.shouldTakeOffWhenRunwayIsClear && iAmTheNextDeparture) {
+                    const lastDeparture = this.fms.departureRunwayModel.lastDepartedAircraftModel;
+                    const iAmTheFirstEverDeparture = lastDeparture === null;
+
+                    if (!iAmTheFirstEverDeparture) {
+                        const actualDistance = nm_ft(this.distanceToAircraft(lastDeparture));
+                        const requiredDistance = this.model.calculateSameRunwaySeparationDistanceInFeet(lastDeparture.model);
+                        const towerUtilizedDistance = requiredDistance + 2000;
+
+                        if (actualDistance < towerUtilizedDistance || lastDeparture.isOnGround()) {
+                            break;
+                        }
+                    }
+
+                    this.fms.departureRunwayModel.removeAircraftFromQueue(this.id);
+                    this.takeoff(this.fms.departureRunwayModel);
+                }
+
                 break;
 
             case FLIGHT_PHASE.TAKEOFF:
@@ -2464,7 +2450,6 @@ export default class AircraftModel {
         const altitude_diff = this.altitude - this.target.altitude;
         let climbRate = this.getClimbRate() * PERFORMANCE.TYPICAL_CLIMB_FACTOR;
 
-        // TODO: Ensure expediting is STOPPED when the altitude is reached
         if (this.mcp.shouldExpediteAltitudeChange || this.isTakeoff()) {
             climbRate = this.model.rate.climb;
         }
@@ -2605,7 +2590,7 @@ export default class AircraftModel {
 
                 // recalculate for new areas or those that should be checked
                 if (!area.range || area.range <= 0) {
-                    new_inside = point_in_poly(this.positionModel.relativePosition, area.data.coordinates);
+                    new_inside = point_in_poly(this.positionModel.relativePosition, area.data.poly);
 
                     // ac has just entered the area: .inside is still false, but st is true
                     if (new_inside && !area.inside) {
@@ -2617,7 +2602,7 @@ export default class AircraftModel {
                         // don't calculate more often than every 10 seconds
                         area.range = Math.max(
                             this.speed * 1.85 / 36 / 1000 * 10,
-                            distance_to_poly(this.positionModel.relativePosition, area.data.coordinates)
+                            distance_to_poly(this.positionModel.relativePosition, area.data.poly)
                         );
                     }
 
@@ -2689,7 +2674,7 @@ export default class AircraftModel {
         this.updateFlightPhase();
         this.updateTarget();
         this.updatePhysics();
-        this._updateAircraftVisibility();
+        this._updateAircraftControllability();
     }
 
     /**
@@ -2761,9 +2746,6 @@ export default class AircraftModel {
         if (this.isControllable) {
             this.callUp();
 
-            // for reentry, see #993
-            this.isFlightStripRemovable = false;
-
             return;
         }
 
@@ -2773,34 +2755,22 @@ export default class AircraftModel {
 
     /**
      * @for AircraftModel
-     * @method _updateAircraftVisibility
+     * @method _updateAircraftControllability
      * @private
      */
-    _updateAircraftVisibility() {
-        const isInsideAirspace = this.isInsideAirspace(AirportController.airport_get());
-
-        if (isInsideAirspace === this.isControllable || this.projected) {
+    _updateAircraftControllability() {
+        if (this.projected) {
             return;
         }
 
-        this._updateControllableStatus(isInsideAirspace);
-        this._contactAircraftAfterControllabilityChange();
-    }
+        const isInsideAirspace = this.isInsideAirspace(AirportController.airport_get());
 
-    /**
-     * Updates the `#isControllable` property when an aircraft either
-     * enters or exits controlled airspace
-     *
-     * @for AircraftModel
-     * @method _updateControllableStatus
-     * @param {booelan} nextControllableStatus
-     */
-    _updateControllableStatus(nextControllableStatus) {
-        this.isControllable = nextControllableStatus;
-
-        if (!nextControllableStatus) {
-            this.setIsFlightStripRemovable();
+        if (this.isControllable === isInsideAirspace) {
+            return;
         }
+
+        this.isControllable = isInsideAirspace;
+        this._contactAircraftAfterControllabilityChange();
     }
 
     /**

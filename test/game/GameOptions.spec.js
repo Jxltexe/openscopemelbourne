@@ -12,6 +12,7 @@ ava('does not throw on instantiation', (t) => {
 ava('sets #_options on instantiation', (t) => {
     const expectedResult = [
         'theme',
+        'towerController',
         'controlMethod',
         'drawIlsDistanceSeparator',
         'ptlLengths',
@@ -19,7 +20,8 @@ ava('sets #_options on instantiation', (t) => {
         'softCeiling',
         'mouseClickDrag',
         'rangeRings',
-        'measureToolPath'
+        'measureToolPath',
+        'chatLogDuration'
     ];
 
     const model = new GameOptions();

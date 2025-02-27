@@ -30,9 +30,9 @@ import { heading_to_string, radiansToDegrees, degreesToRadians } from '../utilit
  * @class AircraftCommander
  */
 export default class AircraftCommander {
-    constructor(aircraftController, onChangeTransponderCode) {
+    constructor(onChangeTransponderCode, findAircraftById) {
         this._eventBus = EventBus;
-        this._aircraftController = aircraftController;
+        this._findAircraftById = findAircraftById;
         this._onChangeTransponderCode = onChangeTransponderCode;
     }
 
@@ -41,9 +41,10 @@ export default class AircraftCommander {
      * @method runCommands
      * @param aircraft {AircraftModel}
      * @param commands {array<AircraftCommandParser>}
+     * @param isPreSpawn {boolean}
      */
-    runCommands(aircraft, commands) {
-        if (!aircraft.isControllable) {
+    runCommands(aircraft, commands, isPreSpawn = false) {
+        if (!aircraft.isControllable && !isPreSpawn) {
             return true;
         }
 
@@ -111,6 +112,10 @@ export default class AircraftCommander {
 
                 response.push(retval[1]);
             }
+        }
+
+        if (isPreSpawn) {
+            return true;
         }
 
         if (commands.length === 0) {
@@ -406,6 +411,19 @@ export default class AircraftCommander {
      * @param aircraft {AircraftModel}
      */
     runFlyPresentHeading(aircraft) {
+        if (aircraft.flightPhase === FLIGHT_PHASE.APRON) {
+            return [false, 'we\'re still at the gate'];
+        }
+
+        if (aircraft.flightPhase === FLIGHT_PHASE.TAXI) {
+            const runway = aircraft.fms.departureRunwayModel;
+            const readback = {};
+            readback.log = `we're still taxiing to Runway ${runway.name}`;
+            readback.say = `we're still taxiing to Runway ${radio_runway(runway.name)}`;
+
+            return [false, readback];
+        }
+
         return aircraft.pilot.maintainPresentHeading(aircraft);
     }
 
@@ -657,15 +675,11 @@ export default class AircraftCommander {
         const runway = aircraft.fms.departureRunwayModel;
         const spotInQueue = runway.getAircraftQueuePosition(aircraft.id);
         const isInQueue = spotInQueue > -1;
-        const aircraftAhead = this._aircraftController.findAircraftById(runway.queue[spotInQueue - 1]);
+        const aircraftAhead = this._findAircraftById(runway.queue[spotInQueue - 1]);
         const wind = airport.getWindAtAltitude();
         const roundedWindAngleInDegrees = round(radiansToDegrees(wind.angle) / 10) * 10;
         const roundedWindSpeed = round(wind.speed);
         const readback = {};
-
-        if (!isInQueue) {
-            return [false, 'unable to take off, we\'re not at any runway'];
-        }
 
         if (aircraft.isAirborne()) {
             return [false, 'unable to take off, we\'re already airborne'];
@@ -684,6 +698,10 @@ export default class AircraftCommander {
 
         if (aircraft.flightPhase === FLIGHT_PHASE.TAKEOFF) {
             return [false, 'already taking off'];
+        }
+
+        if (!isInQueue) {
+            return [false, 'unable to take off, we\'re not at any runway'];
         }
 
         if (spotInQueue > 0) {

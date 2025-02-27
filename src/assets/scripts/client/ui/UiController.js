@@ -6,6 +6,7 @@ import EventTracker from '../EventTracker';
 import GameController from '../game/GameController';
 import SettingsController from './SettingsController';
 import TrafficRateController from './TrafficRateController';
+import VideoMapController from './VideoMapController';
 import TutorialView from './TutorialView';
 import { speech_toggle } from '../speech';
 import { EVENT } from '../constants/eventNames';
@@ -57,6 +58,14 @@ class UiController {
         this.trafficRateController = null;
 
         /**
+         * @for UiController
+         * @property videoMapController
+         * @type {VideoMapController}
+         * @default null
+         */
+        this.videoMapController = null;
+
+        /**
          * Root element used to find all other DOM elements needed by this class
          *
          * @for UiController
@@ -95,6 +104,17 @@ class UiController {
          * @default null
          */
         this.$airportGuideDialog = null;
+
+
+        /**
+         * Element of the airport search bar
+         *
+         * @for UiController
+         * @property $airportSearch
+         * @type {Jquery|Element}
+         * @default null
+         */
+        this.$airportSearch = null;
 
         /**
          * Element of the changelog dialog
@@ -135,6 +155,16 @@ class UiController {
          * @default null
          */
         this.$log = null;
+
+        /**
+         * Duration for chat log transmissions to remain visible in seconds
+         *
+         * @for UiController
+         * @property chatLogDuration
+         * @type number
+         * @default null
+         */
+        this.chatLogDuration = null;
 
         /**
          * Element in center of screen to unpause when paused
@@ -321,11 +351,13 @@ class UiController {
         this.tutorialView = new TutorialView($element);
         this.settingsController = new SettingsController($element);
         this.trafficRateController = new TrafficRateController($element);
+        this.videoMapController = new VideoMapController($element);
 
         this.$element = $element;
         this.$airportDialog = this.$element.find(SELECTORS.DOM_SELECTORS.AIRPORT_SWITCH);
         this.$airportDialogBody = this.$airportDialog.find(SELECTORS.DOM_SELECTORS.DIALOG_BODY);
         this.$airportGuideDialog = this.$element.find(SELECTORS.DOM_SELECTORS.AIRPORT_GUIDE_CONTAINER);
+        this.$airportSearch = this.$element.find(SELECTORS.DOM_SELECTORS.AIRPORT_SEARCH);
         this.$changelogDialog = this.$element.find(SELECTORS.DOM_SELECTORS.CHANGELOG_CONTAINER);
         this.$fastForwards = this.$element.find(SELECTORS.DOM_SELECTORS.FAST_FORWARDS);
         this.$githubLinkElement = this.$element.find(SELECTORS.DOM_SELECTORS.GITHUB_EXTERNAL_LINK);
@@ -347,6 +379,7 @@ class UiController {
         this.$toggleTutorial = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_TUTORIAL);
         this.$toggleVideoMap = this.$element.find(SELECTORS.DOM_SELECTORS.TOGGLE_VIDEO_MAP);
         this.$tutorialDialog = this.$element.find(SELECTORS.DOM_SELECTORS.TUTORIAL);
+        this.chatLogDuration = GameController.game.option.getOptionByName('chatLogDuration');
 
         return this.setupHandlers()
             .enable();
@@ -359,6 +392,7 @@ class UiController {
      */
     setupHandlers() {
         this.onAirportChangeHandler = this.onAirportChange.bind(this);
+        this.onChatLogDurationChangeHandler = this.onChatLogDurationChange.bind(this);
 
         return this;
     }
@@ -366,15 +400,18 @@ class UiController {
     /**
      * Enable event handlers
      *
-     * should be run only once on instantiation
-     *
      * @for UiController
      * @method enable
+     * @chainable
      */
     enable() {
         this._eventBus.on(EVENT.AIRPORT_CHANGE, this.onAirportChangeHandler);
+        this._eventBus.on(EVENT.CHAT_LOG_DURATION_CHANGE, this.onChatLogDurationChangeHandler);
 
         // TODO: move these to properly bound handler methods
+
+        // using keyup here because the search is based on the contents of the search bar
+        this.$airportSearch.on('keyup', (event) => this._onInitiateAirportSearch(event));
         this.$fastForwards.on('click', (event) => GameController.game_timewarp_toggle(event));
         this.$githubLinkElement.on('click', (event) => this.onClickGithubLink(event));
         this.$pausedImg.on('click', (event) => GameController.game_unpause(event));
@@ -402,10 +439,12 @@ class UiController {
      *
      * @for UiController
      * @method disable
+     * @chainable
      */
     disable() {
         this._eventBus.off(EVENT.AIRPORT_CHANGE, this.onAirportChangeHandler);
-
+        this._eventBus.off(EVENT.CHAT_LOG_DURATION_CHANGE, this.onChatLogDurationChangeHandler);
+        this.$airportSearch.off('keyup', (event) => this._onInitiateAirportSearch(event));
         this.$fastForwards.off('click', (event) => GameController.game_timewarp_toggle(event));
         this.$githubLinkElement.off('click', (event) => this.onClickGithubLink(event));
         this.$pausedImg.off('click', (event) => GameController.game_unpause(event));
@@ -425,16 +464,18 @@ class UiController {
         this.$toggleTutorial.off('click', (event) => this.onToggleTutorial(event));
         this.$toggleVideoMap.off('click', (event) => this.onToggleVideoMap(event));
 
-        return this.destroy();
+        return this();
     }
 
     /**
-     * Tear down the instance
+     * Reset the instance
      *
      * @for UiController
-     * @method destroy
+     * @method reset
      */
-    destroy() {
+    reset() {
+        this.disable();
+
         this._eventBus = null;
         this.tutorialView = null;
         this.settingsController = null;
@@ -444,10 +485,12 @@ class UiController {
         this.$airportDialog = null;
         this.$airportDialogBody = null;
         this.$airportGuideDialog = null;
+        this.$airportSearch = null;
         this.$changelogDialog = null;
         this.$fastForwards = null;
         this.$githubLinkElement = null;
         this.$log = null;
+        this.chatLogDuration = null;
         this.$pausedImg = null;
         this.$switchAirport = null;
         this.$toggleAirportGuide = null;
@@ -507,7 +550,7 @@ class UiController {
             setTimeout(() => {
                 uiLogView.remove();
             }, 10000);
-        }, 3, window, html);
+        }, this.chatLogDuration, window, html);
     }
 
     /**
@@ -516,6 +559,14 @@ class UiController {
      */
     onAirportChange() {
         this.$log.empty();
+    }
+
+    /**
+     * @for UiController
+     * @method onAirportChange
+     */
+    onChatLogDurationChange() {
+        this.chatLogDuration = GameController.game.option.getOptionByName('chatLogDuration');
     }
 
     /**
@@ -547,6 +598,10 @@ class UiController {
 
         if (this.isTutorialDialogOpen()) {
             this.onToggleTutorial();
+        }
+
+        if (this.videoMapController.isDialogOpen()) {
+            this.onToggleVideoMap();
         }
     }
 
@@ -700,6 +755,7 @@ class UiController {
      * @for UiController
      * @method _onClickOpenAirportDialog
      */
+
     _onClickOpenAirportDialog() {
         EventTracker.recordEvent(TRACKABLE_EVENT.AIRPORTS, 'airport-switcher', 'open');
         this.$airportDialog.addClass(SELECTORS.CLASSNAMES.OPEN);
@@ -717,6 +773,23 @@ class UiController {
         this.$switchAirport.addClass(SELECTORS.CLASSNAMES.ACTIVE);
     }
 
+
+    /**
+     * @for UiController
+     * @method _onInitiateAirportSearch
+     */
+    _onInitiateAirportSearch() {
+        EventTracker.recordEvent(TRACKABLE_EVENT.AIRPORTS, 'airport-search', 'start');
+
+        const value = this.$airportSearch.val().toLowerCase();
+
+        $('.dialog-body li').each(
+            function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            }
+        );
+    }
+
     /**
      * @for UiController
      * @method _onClickCloseAirportDialog
@@ -726,6 +799,8 @@ class UiController {
         EventTracker.recordEvent(TRACKABLE_EVENT.AIRPORTS, 'airport-switcher', 'close');
         this.$airportDialog.removeClass(SELECTORS.CLASSNAMES.OPEN);
         this.$switchAirport.removeClass(SELECTORS.CLASSNAMES.ACTIVE);
+        this.$airportSearch.val(null);
+        $('.dialog-body li').each(() => $(this).toggle(true));
     }
 
     /**
@@ -899,6 +974,8 @@ class UiController {
     }
 
     /**
+     * Handler for selecting the current Video Maps
+     *
      * @for UiController
      * @method onToggleVideoMap
      * @param event {jquery event}
@@ -910,7 +987,7 @@ class UiController {
             'video-map',
             `${this.$toggleVideoMap.hasClass(SELECTORS.CLASSNAMES.ACTIVE)}`
         );
-        this._eventBus.trigger(EVENT.TOGGLE_VIDEO_MAP);
+        this.videoMapController.toggleDialog();
     }
 
     /**

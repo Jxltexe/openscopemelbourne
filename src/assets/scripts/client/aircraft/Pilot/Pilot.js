@@ -154,10 +154,10 @@ export default class Pilot {
         let expediteReadback = '';
 
         if (expedite) {
+            this._mcp.shouldExpediteAltitudeChange = true;
+
             // including space here so when expedite is false there isnt an extra space after altitude
             expediteReadback = ' and expedite';
-
-            this.shouldExpediteAltitudeChange();
         }
 
         const readback = {};
@@ -227,8 +227,11 @@ export default class Pilot {
         this._mcp.setHeadingHold();
 
         const readback = {};
-        readback.log = 'fly present heading';
-        readback.say = 'fly present heading';
+        const runwayOrPresent = (
+            aircraftModel.flightPhase === FLIGHT_PHASE.WAITING || aircraftModel.flightPhase === FLIGHT_PHASE.TAKEOFF
+        ) ? 'runway' : 'present';
+        readback.log = `fly ${runwayOrPresent} heading`;
+        readback.say = `fly ${runwayOrPresent} heading`;
 
         return [true, readback];
     }
@@ -432,17 +435,16 @@ export default class Pilot {
             if (!holdWaypointModel || !holdWaypointModel.isHoldWaypoint) {
                 return [false, {
                     log: `that must be for somebody else, we weren't given holding over ${fixName.toUpperCase()}`,
-                    say: `that must be for somebody else, we weren't given holding over ${fixName.toLowerCase()}`
+                    say: `that must be for somebody else, we weren't given holding over ${NavigationLibrary.getFixSpokenName(fixName)}`
                 }];
             }
         }
 
         holdWaypointModel.deactivateHold();
 
-        // force lower-case in verbal readback to get speech synthesis to pronounce the fix instead of speling it
         return [true, {
             log: `roger, we'll cancel the hold at ${holdWaypointModel.getDisplayName()}`,
-            say: `roger, we'll cancel the hold at ${holdWaypointModel.name.toLowerCase()}`
+            say: `roger, we'll cancel the hold at ${NavigationLibrary.getFixSpokenName(holdWaypointModel.name)}`
         }];
     }
 
@@ -580,11 +582,19 @@ export default class Pilot {
         }
 
         if (!NavigationLibrary.hasFixName(fixName)) {
-            return [false, `unable to find '${fixName}'`];
+            const readback = {
+                log: `unable to find '${fixName.toUpperCase()}'`,
+                say: `unable to find ${NavigationLibrary.getFixSpokenName(fixName)}`
+            };
+            return [false, readback];
         }
 
         if (!this._fms.hasWaypointName(fixName)) {
-            return [false, `unable, '${fixName}' is not on our route`];
+            const readback = {
+                log: `unable, '${fixName.toUpperCase()}' is not on our route`,
+                say: `unable, ${NavigationLibrary.getFixSpokenName(fixName)} is not on our route`
+            };
+            return [false, readback];
         }
 
         const airportModel = this._fms.arrivalAirportModel || this._fms.departureAirportModel;
@@ -606,7 +616,7 @@ export default class Pilot {
 
             const readback = {
                 log: `cross ${fixName.toUpperCase()} at ${altitude}`,
-                say: `cross ${fixName.toLowerCase()} at ${radio_altitude(altitude)}`
+                say: `cross ${NavigationLibrary.getFixSpokenName(fixName)} at ${radio_altitude(altitude)}`
             };
 
             return [true, readback];
@@ -626,7 +636,7 @@ export default class Pilot {
 
             const readback = {
                 log: `cross ${fixName.toUpperCase()} at ${speed}kt`,
-                say: `cross ${fixName.toLowerCase()} at ${radio_spellOut(speed)} knots`
+                say: `cross ${NavigationLibrary.getFixSpokenName(fixName)} at ${radio_spellOut(speed)} knots`
             };
 
             return [true, readback];
@@ -653,7 +663,7 @@ export default class Pilot {
 
         const readback = {
             log: `cross ${fixName.toUpperCase()} at ${altitude} and ${speed}kt`,
-            say: `cross ${fixName.toLowerCase()} at ${radio_altitude(altitude)} and ${radio_spellOut(speed)} knots`
+            say: `cross ${NavigationLibrary.getFixSpokenName(fixName)} at ${radio_altitude(altitude)} and ${radio_spellOut(speed)} knots`
         };
 
         return [true, readback];
@@ -833,7 +843,7 @@ export default class Pilot {
         // force lower-case in verbal readback to get speech synthesis to pronounce the fix instead of spelling it
         return [true, {
             log: `hold ${cardinalDirectionFromFix} of ${fixName.toUpperCase()} ${radialReadbackLog}, ${holdParametersReadback}`,
-            say: `hold ${cardinalDirectionFromFix} of ${fixName.toLowerCase()} ${radialReadbackSay}, ${holdParametersReadback}`
+            say: `hold ${cardinalDirectionFromFix} of ${NavigationLibrary.getFixSpokenName(fixName)} ${radialReadbackSay}, ${holdParametersReadback}`
         }];
     }
 
@@ -873,19 +883,6 @@ export default class Pilot {
     }
 
     /**
-     * Expedite the climb or descent to the assigned altitude, to use maximum possible rate
-     *
-     * @for Pilot
-     * @method shouldExpediteAltitudeChange
-     * @return {Array} [success of operation, readback]
-     */
-    shouldExpediteAltitudeChange() {
-        this._mcp.shouldExpediteAltitudeChange = true;
-
-        return [true, 'expediting to assigned altitude'];
-    }
-
-    /**
      * Skip ahead in the FMS to the waypoint for the specified waypointName, and activate LNAV to fly to it
      *
      * @for Pilot
@@ -895,14 +892,22 @@ export default class Pilot {
      */
     proceedDirect(waypointName) {
         if (!this._fms.hasWaypointName(waypointName)) {
-            return [false, `cannot proceed direct to ${waypointName}, it does not exist in our flight plan`];
+            const readback = {
+                log: `cannot proceed direct to ${waypointName}, it does not exist in our flight plan`,
+                say: `cannot proceed direct to ${NavigationLibrary.getFixSpokenName(waypointName)}, it does not exist in our flight plan`
+            };
+            return [false, readback];
         }
 
         this._fms.skipToWaypointName(waypointName);
         this.cancelHoldingPattern();
         this._mcp.setHeadingLnav();
 
-        return [true, `proceed direct ${waypointName}`];
+        const readback = {
+            log: `proceed direct ${waypointName}`,
+            say: `proceed direct ${NavigationLibrary.getFixSpokenName(waypointName)}`
+        };
+        return [true, readback];
     }
 
     /**
@@ -982,7 +987,7 @@ export default class Pilot {
                 const bearing = Math.round(radiansToDegrees(this.positionModel.bearingToPosition(waypointPosition)));
 
                 readback.log = `our on-course heading to ${waypoint.getDisplayName()} is ${bearing}`;
-                readback.say = `our on-course heading to ${waypoint.getDisplayName()} is ${radio_heading(bearing)}`;
+                readback.say = `our on-course heading to ${NavigationLibrary.getFixSpokenName(waypoint.getDisplayName())} is ${radio_heading(bearing)}`;
 
                 return [true, readback];
             }

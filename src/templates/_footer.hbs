@@ -1,4 +1,38 @@
 <div class="footer">
+    <div id="autocomplete">{{! autocomplete root containter, also blocks mouse events to rest of app while active }}
+        <div id="autocomplete-spacer">{{!--
+            invisible inline-block spacer div, shrinks to fit content width
+            populated with copy of left portion of input command before autocomplete target range
+            this positions autocomplete UI exactly at the point that it will insert/replace into
+        --}}</div>{{!-- no whitespace allowed here! it'll add a space and mess up the positioning
+        --}}<div id="autocomplete-ui">
+            <div id="autocomplete-popup" class="notSelectable">
+                <div id="autocomplete-legend">
+                    Legend: <b>alias</b> | <u>argument</u> | <i>optional</i>
+                </div>
+                <div id="autocomplete-suggests"></div>
+                <div id="autocomplete-instruction">
+                    <span id="autocomplete-instruction-navigate">[&#x2191;/&#x2193;] to navigate</span>
+                    <span id="autocomplete-instruction-select">[tab] to select</span>
+                    <span id="autocomplete-instruction-commit">[tab] to commit</span>
+                    <span id="autocomplete-instruction-revert">[esc] to go back</span>
+                    <span id="autocomplete-instruction-cancel">[esc] to cancel</span>
+                </div>
+            </div>
+            <div id="autocomplete-footer">
+                <input id="autocomplete-output" size="1"
+                    disabled="disabled" />{{!-- no whitespace
+                --}}<input id="autocomplete-input" size="15"
+                    placeholder="search commands"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    autocomplete="off"
+                    spellcheck="false" />{{!-- no whitespace
+                --}}<span id="autocomplete-footer-fade"></span>
+            </div>
+        </div>
+    </div>
+
     <input id="command"
            placeholder="enter aircraft command"
            autocapitalize="off"
@@ -53,9 +87,9 @@
                     <img src="assets/images/icons/terrain.png" />
                     <span>Terrain</span>
                 </a>
-                <a class="control toggle-video-map active">
+                <a class="control toggle-video-map">
                     <img src="assets/images/icons/map.png" />
-                    <span>Video Map</span>
+                    <span>Video Maps</span>
                 </a>
                 </a>
             </div>
@@ -100,7 +134,7 @@
                     <img src="assets/images/icons/changelog.png" />
                     <span>Changelog</span>
                 </a>
-                <a class="control" href="http://slack.openscope.io/" target="_blank">
+                <a class="control" href="https://join.slack.com/t/openscopeatc/shared_invite/zt-g9wq2mch-B7Z9IltlgxgCBC2dBYPjiw" target="_blank">
                 	<img src="assets/images/Slack_Mark_Monochrome_White_36px.png"/>
                 	<span>Chat With Us</span>
                 </a>
@@ -110,6 +144,13 @@
                 </a>
             </div>
         </li>
+        <li class="control-item">
+            <a class="control-icon">
+                <div id="score" class="notSelectable" title="Score">-</div>
+            </a>
+            <div class="control-item-content wide">
+                <ul id="score-log" class="nice-scrollbar"></ul>
+            </div>
+        </li>
     </ul>
-    <div id="score" class="notSelectable" title="Score">-</div>
 </div>
