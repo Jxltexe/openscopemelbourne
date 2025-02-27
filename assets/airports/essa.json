@@ -603,6 +603,9 @@
         },
         {
             "name": "R15B",
+            "labelPositions": [
+                ["N59d56m32.00", "E018d53m32.00"]
+            ],
             "height": "4500ft",
             "coordinates": [
                 ["N60d12m57.00", "E018d43m47.00"],
