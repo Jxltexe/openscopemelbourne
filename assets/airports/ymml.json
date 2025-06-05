@@ -1,28 +1,28 @@
 {
     "radio": {
-        "twr": "Halifax Tower",
-        "app": "Halifax Terminal",
-        "dep": "Halifax Terminal"
+        "twr": "Melbourne Tower",
+        "app": "Melbourne Approach",
+        "dep": "Melbourne Departures"
     },
-    "icao": "CYHZ",
-    "iata": "YHZ",
-    "magnetic_north": -18,
-    "ctr_radius": 80,
-    "ctr_ceiling": 18000,
+    "icao": "YMML",
+    "iata": "MEL",
+    "magnetic_north": 11.91,
+    "ctr_radius": 31,
+    "ctr_ceiling": 24000,
     "initial_alt": 5000,
-    "position": ["N44d52m52.73", "W063d30m33.62", "477.0ft"],
+    "position": ["S37d39m49.36", "E144d50m41.24", "434.0ft"],
     "rangeRings": {
         "enabled": true,
-        "center": ["N44d52m47.00", "W063d30m37.00"],
+        "center": ["S37d39m49.36", "E144d50m41.24"],
         "radius_nm": 5.0
     },
     "has_terrain": true,
     "wind": {
-        "angle": 202,
-        "speed": 10
+        "angle": 245,
+        "speed": 14
     },
-    "arrivalRunway": "23",
-    "departureRunway": "23",
+    "arrivalRunway": "27",
+    "departureRunway": "16",
     "defaultMaps": ["Base Map", "Extended Runway Centrelines"],
     "airspace": [
         {
