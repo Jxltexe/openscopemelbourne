@@ -26,9 +26,9 @@
     "defaultMaps": ["Base Map", "Extended Runway Centrelines"],
     "airspace": [
         {
-            "floor": 125,
-            "ceiling": 180,
-            "airspace_class": "B",
+            "floor": 0,
+            "ceiling": 240,
+            "airspace_class": "C",
             "labelPositions": [
                 [45.40527, -63.46399]
             ],
