@@ -667,4 +667,11 @@
         "premium": false,
         "disabled": true
     }
+    {
+        "icao": "ymml",
+        "level": "hard",
+        "name": "Melbourne Tullamarine International Airport",
+        "premium": true,
+        "disabled": false
+    }
 ]
