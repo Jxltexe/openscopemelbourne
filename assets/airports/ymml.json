@@ -491,23 +491,23 @@
             "ils": [true, true]
         },
         {
-            "name": ["14", "32"],
+            "name": ["34", "16"],
             "end": [
-                ["N44d53m37.433", "W63d31m02.783", "435ft"],
-                ["N44d52m53.682", "W63d29m35.193", "476ft"]
+                ["S37d41m08.000", "E144d50m27.000", "432ft"],
+                ["S37d39m11.000", "E144d50m05.000", "432ft"]
             ],
-            "ils": [true, false]
+            "ils": [true, true]
         }
     ],
     "sids": {
-        "CYHZ4": {
-            "icao": "CYHZ4",
-            "name": "Halifax Four",
+        "MEL6": {
+            "icao": "MEL6",
+            "name": "Melbourne Six",
             "rwy": {
-                "CYHZ05": ["#053"],
-                "CYHZ14": ["#143"],
-                "CYHZ23": ["#233"],
-                "CYHZ32": ["#323"]
+                "YMML09": ["#083"],
+                "YMML27": ["#263"],
+                "YMML34": ["#340"],
+                "YMML16": ["#160"]
             },
             "body": ["YHZ"],
             "exitPoints": {
