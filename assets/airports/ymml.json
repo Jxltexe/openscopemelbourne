@@ -16,7 +16,7 @@
         "center": ["S37d39m49.36", "E144d50m41.24"],
         "radius_nm": 5.0
     },
-    "has_terrain": true,
+    "has_terrain": false,
     "wind": {
         "angle": 245,
         "speed": 14
@@ -534,95 +534,95 @@
             ]
         }
         "CORRS9": {
-            "icao": "CORRS9",
-            "name": "COORS NINE",
+            "icao": "CORRS1",
+            "name": "CORRS ONE",
             "rwy": {
                 "34": [["ROKDL", "s250"], ["POREM", "A50+"], ["GEDEN", "F100+"], ["CORRS"]],
                 "27": [["LILPU", "A40+"], ["DARLY"], ["SULPO", "A80+|K250"], ["CORRS"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "CORRS": [["CORRS"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["ROKDL", "POREM", "GEDEN", "CORRS*"], ["LILPU", "DARLY", "SULPO", "CORRS*"]]
         },
-        "LAM": {
-            "icao": "LAM",
-            "name": "Lambourne",
+        "CRENA 3": {
+            "icao": "CRENA3",
+            "name": "CREENA THREE",
             "rwy": {
-                "08R": [["KKE02", "A20+|K250"], ["KKE12", "A30+"]],
-                "26L": [["KKW04", "A25+|K220"], ["KKN06", "A30+|K220"], ["KKE14", "A40-|K250"]]
+                "34": [["#340", "A15+"], ["LILPU"], ["CRENA"]],
+                "27": [["LILPU"], ["CRENA"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "CRENA": [["CRENA"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["#340", "LILPU", "CRENA*"], ["LILPU", "CRENA*"]]
         },
-        "LAM": {
-            "icao": "LAM",
-            "name": "Lambourne",
+        "ESDIG5": {
+            "icao": "ESDIG5",
+            "name": "ESDIG FIVE",
             "rwy": {
-                "08R": [["KKE02", "A20+|K250"], ["KKE12", "A30+"]],
-                "26L": [["KKW04", "A25+|K220"], ["KKN06", "A30+|K220"], ["KKE14", "A40-|K250"]]
+                "34": [["#340", "A15+"], ["LILPU"], ["ESDIG"]],
+                "27": [["LILPU"], ["ESDIG"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "LAM": [["ESDIG"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["#340", "LILPU", "ESDIG*"], ["LILPU", "ESDIG*"]]
         },
-        "LAM": {
-            "icao": "LAM",
-            "name": "Lambourne",
+        "DOSEL2": {
+            "icao": "DOSEL2",
+            "name": "DOSEL TWO",
             "rwy": {
-                "08R": [["KKE02", "A20+|K250"], ["KKE12", "A30+"]],
-                "26L": [["KKW04", "A25+|K220"], ["KKN06", "A30+|K220"], ["KKE14", "A40-|K250"]]
+                "34": [["ROKDL"], ["OKIKA"], ["DOSEL"]],
+                "27": [["ATNOL"], ["PARSI"], ["PEBTO, A100+"], ["PEART"], ["DOSEL"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "DOSEL": [["DOSEL"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["ROKDL", "OKIKA", "DOSEL*"], ["ATNOL", "PARSI", "PEBTO", "PEART", "DOSEL*"]]
         },
-        "LAM": {
-            "icao": "LAM",
-            "name": "Lambourne",
+        "MNG4": {
+            "icao": "MNG4",
+            "name": "MANGALORE FOUR",
             "rwy": {
-                "08R": [["KKE02", "A20+|K250"], ["KKE12", "A30+"]],
-                "26L": [["KKW04", "A25+|K220"], ["KKN06", "A30+|K220"], ["KKE14", "A40-|K250"]]
+                "34": [["ROKDL"], ["OKIKA"], ["MNG"]],
+                "27": [["ATNOL"], ["PARSI"], ["PEBTO, A100+"], ["PEART"], ["MNG"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "MANGALORE": [["MNG"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["ROKDL", "OKIKA", "MNG*"], ["ATNOL", "PARSI", "PEBTO", "PEART", "MNG*"]]
         },
-        "LAM": {
-            "icao": "LAM",
-            "name": "Lambourne",
+        "NONIX4": {
+            "icao": "NONIX4",
+            "name": "NONIX FOUR",
             "rwy": {
-                "08R": [["KKE02", "A20+|K250"], ["KKE12", "A30+"]],
-                "26L": [["KKW04", "A25+|K220"], ["KKN06", "A30+|K220"], ["KKE14", "A40-|K250"]]
+                "34": [["ROKDL"], ["OKIKA"], ["NONIX"]],
+                "27": [["ATNOL"], ["PARSI"], ["PEBTO, A100+"], ["PEART"], ["NONIX"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "NONIX": [["NONIX"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["ROKDL", "OKIKA", "NONIX*"], ["ATNOL", "PARSI", "PEBTO", "PEART", "NONIX*"]]
         },
-        "LAM": {
-            "icao": "LAM",
-            "name": "Lambourne",
+        "KEPPA3": {
+            "icao": "KEPPA3",
+            "name": "KEPPA THREE",
             "rwy": {
-                "08R": [["KKE02", "A20+|K250"], ["KKE12", "A30+"]],
-                "26L": [["KKW04", "A25+|K220"], ["KKN06", "A30+|K220"], ["KKE14", "A40-|K250"]]
+                "34": [["AVMEL"], ["KEPPA"]],
+                "27": [["ATNOL"], ["KEPPA"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "KEPPA": [["KEPPA"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["AVMEL", "KEPPA*"], ["ATNOL", "KEPPA"]]
         },
         "LAM": {
             "icao": "LAM",
