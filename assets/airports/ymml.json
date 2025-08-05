@@ -622,43 +622,43 @@
             "exitPoints": {
                 "KEPPA": [["KEPPA"]]
             },
-            "draw": [["AVMEL", "KEPPA*"], ["ATNOL", "KEPPA"]]
+            "draw": [["AVMEL", "KEPPA*"], ["ATNOL", "KEPPA*"]]
         },
-        "LAM": {
-            "icao": "LAM",
-            "name": "Lambourne",
+        "PEDNI1": {
+            "icao": "PEDNI1",
+            "name": "PEDNI ONE",
             "rwy": {
-                "08R": [["KKE02", "A20+|K250"], ["KKE12", "A30+"]],
-                "26L": [["KKW04", "A25+|K220"], ["KKN06", "A30+|K220"], ["KKE14", "A40-|K250"]]
+                "34": [["AVMEL"], ["PEDNI"]],
+                "27": [["ATNOL"], ["KEPPA"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "PEDNI": [["PEDNI"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["AVMEL", "PEDNI*"], ["ATNOL", "PEDNI*"]]
         },
-        "LAM": {
-            "icao": "LAM",
-            "name": "Lambourne",
+        "SUNTI4": {
+            "icao": "SUNTI4",
+            "name": "SUNTI FOUR",
             "rwy": {
-                "08R": [["KKE02", "A20+|K250"], ["KKE12", "A30+"]],
-                "26L": [["KKW04", "A25+|K220"], ["KKN06", "A30+|K220"], ["KKE14", "A40-|K250"]]
+                "34": [["ROKDL"], ["POREM", "A50+"], ["GEDEN", "A100+"], ["PEBAL"], ["SUNTI"]],
+                "27": [["LILPU", "A40+"], ["DARLY"], ["SUNTI"]]
             },
-            "body": [["SUNAV", "A50"], ["KKE35", "A50"], ["KKN43", "A50"], ["KKN48", "A60"]],
+            "body": [[]],
             "exitPoints": {
-                "LAM": [["LAM", "A60"]]
+                "SUNTI": [["SUNTI"]]
             },
-            "draw": [["KKE02", "KKE12"], ["KKW04", "KKN06", "KKE14", "SUNAV", "KKE35", "KKN43", "KKN48", "LAM"]]
+            "draw": [["ROKDL", "POREM", "GEDEN", "PEBAL", "SUNTI*"], ["LILPU", "DARLY", "SUNTI*"]]
         },
     },
     "stars": {
-        "CABOT2": {
-            "icao": "CABOT2",
-            "name": "Cabot Two",
+        "ALAXO1": {
+            "icao": "ALAXO1",
+            "name": "Alaxo One",
             "entryPoints": {
-                "CAYLY": ["CAYLY"]
+                "ALAXO": ["ALAXO"]
             },
-            "body": ["BOSUB"],
+            "body": ["KEELA"],
             "rwy": {
                 "CYHZ05": ["OTVUV", ["PEPTA", "A50|S210-"], ["OBNOM", "A40+|S210-"], "#233"],
                 "CYHZ14": ["KEBOT", ["VIMLA", "A50|S210-"], ["IGVOP", "A40+|S210-"], "#323"],
@@ -672,14 +672,13 @@
                 ["BOSUB", "LEROS"]
             ]
         },
-        "FUNDY2": {
-            "icao": "FUNDY2",
-            "name": "Fundy Two",
+        "ARBEY8": {
+            "icao": "ARBEY8",
+            "name": "Arbey Eight",
             "entryPoints": {
-                "ALLEX": ["ALLEX", "BAFDY"],
-                "EBONY": ["EBONY", "EBKID"]
+                "ARBEY": ["ARBEY"]
             },
-            "body": ["MUVOX"],
+            "body": ["BELTA"],
             "rwy": {
                 "CYHZ05": [["ODKAS", "A30+|S200-"]],
                 "CYHZ14": [["TETAR", "A30+|S200-"]],
@@ -693,13 +692,13 @@
                 ["MUVOX", "LOGPO", "DUTIR", "LEROS"]
             ]
         },
-        "LIRLA2": {
-            "icao": "LIRLA2",
-            "name": "Lirla Two",
+        "BOOIN1A": {
+            "icao": "BOOIN1A",
+            "name": "Booin One Alpha",
             "entryPoints": {
-                "AGMIR": ["AGMIR"]
+                "BOOIN": ["BOOIN"]
             },
-            "body": ["LIRLA"],
+            "body": ["BOOIN"],
             "rwy": {
                 "CYHZ05": [["PEPTA", "A50|S210-"], ["OBNOM", "A40+|S210-"], "#233"],
                 "CYHZ14": [["VIMLA", "A50|S210-"], ["IGVOP", "A40+|S210-"], "#323"],
@@ -713,14 +712,33 @@
                 ["LIRLA", "LEROS"]
             ]
         },
-        "PEGGY2": {
-            "icao": "PEGGY2",
-            "name": "Peggy Two",
+        "BOYSE9A": {
+            "icao": "BOYSE9A",
+            "name": "Boyse Nine Alpha",
             "entryPoints": {
-                "ELERI": ["ELERI"],
-                "TUSKY": ["TUSKY"]
+                "BOYSE": ["BOYSE"]
             },
-            "body": ["ETGAR"],
+            "body": ["BOYSE"],
+            "rwy": {
+                "CYHZ05": [["PEPTA", "A50|S210-"], ["OBNOM", "A40+|S210-"], "#233"],
+                "CYHZ14": [["VIMLA", "A50|S210-"], ["IGVOP", "A40+|S210-"], "#323"],
+                "CYHZ23": [["LEROS", "A30+|S200-"]],
+                "CYHZ32": [["VOKIL", "A30+|S200-"]]
+            },
+            "draw": [
+                ["AGMIR", "LIRLA", "VIMLA", "IGVOP"],
+                ["LIRLA", "VOKIL"],
+                ["LIRLA", "PEPTA", "OBNOM"],
+                ["LIRLA", "LEROS"]
+            ]
+        },
+        "RAZZI1A": {
+            "icao": "RAZZI1A",
+            "name": "Razzi One Alpha",
+            "entryPoints": {
+                "RAZZI": ["RAZZI"]
+            },
+            "body": ["RAZZI"],
             "rwy": {
                 "CYHZ05": [["ODKAS", "A30+|S200-"]],
                 "CYHZ14": [["ILOTA", "A50|S210-"], ["MODIR", "A40+|S210-"], "DUNUB", "#323"],
