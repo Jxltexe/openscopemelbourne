@@ -658,18 +658,18 @@
             "entryPoints": {
                 "ALAXO": ["ALAXO"]
             },
-            "body": ["KEELA"],
+            "body": ["KEELA", ["NIXEN", "A90+"], "IKUNA"],
             "rwy": {
-                "CYHZ05": ["OTVUV", ["PEPTA", "A50|S210-"], ["OBNOM", "A40+|S210-"], "#233"],
-                "CYHZ14": ["KEBOT", ["VIMLA", "A50|S210-"], ["IGVOP", "A40+|S210-"], "#323"],
-                "CYHZ23": [["LEROS", "A30+|S200-"]],
-                "CYHZ32": [["MENVO", "A50|S230-"], ["GABAP", "A40+|S210-"], "KIXIT", "#143"]
+                "YMML34": [["MEMEG", "A50+"], "DUDAB", ["OBGAL", "A30+"], ["AKDEL", "A25+|S185-"]],
+                "YMML27": [["KEELA", "A50+"], ["NOMID", "S230-"], ["ROCEL", "A40+"], ["VISAS", "S185-"]],
+                "YMML16": [["KEELA", "A50+"], "PASCO", ["JADEL", "A60+, A80-"], ["KIKEX", "S230"], ["NEFER", "A40+, A060-"], ["BELTA", "S185"]],
+                "YMML09": ["RIPMO", ["AVPIX", "A40+"], ["GUPUG", "A30+, A40-|S185-"]]
             },
             "draw": [
-                ["CAYLY*", "BOSUB", "KEBOT", "VIMLA", "IGVOP"],
-                ["BOSUB", "MENVO", "GABAP", "KIXIT"],
-                ["BOSUB", "OTVUV", "PEPTA", "OBNOM"],
-                ["BOSUB", "LEROS"]
+                ["ALAXO*", "NIXEN", "IKUNA", "MEMEG", "DUDAB", "OBGAL", "AKDEL"],
+                ["IKUNA", "KEELA", "NOMID", "ROCEL", "VISAS"],
+                ["PASCO", "JADEL", "KIKEX", "NEFER", "BELTA"],
+                ["RIPMO", "AVPIX", "GUPUG"]
             ]
         },
         "ARBEY8": {
