@@ -680,13 +680,13 @@
             },
             "body": ["BELTA"],
             "rwy": {
-                "CYHZ05": [["ODKAS", "A30+|S200-"]],
-                "CYHZ14": [["TETAR", "A30+|S200-"]],
-                "CYHZ23": [["LOGPO", "A50|S210-"], ["DUTIR", "A40+|S210-"], "#053"],
-                "CYHZ32": [["EBLUV", "A50|S210-"], ["EMBAX", "A40+|S210-"], "#143"]
+                "YMML34": [["OVNER", "A60+"], "RENER", ["GOSKO", "S230"], "DUDAB", ["OBGAL", "A30+"], "AKDEL"],
+                "YMML27": [["LAKEP", "A60+"], ["BOBEL", "S230"], "DOKNO", ["VISAS", "S185-"]],
+                "YMML16": [["ARBEY", "A80+"], ["TUNKA", "A90-, A50+"], ["LASOL", "A40+"], "BELTA"],
+                "YMML09": [["ARBEY", "A80+"], ["TUNKA", "A90-, A50+"], ["DABUX", "S230"] ["OPAVA", "A60-"], ["UPKAN", "A40+"], ["GUPUG", "S185-", "A40-, A30+"]]
             },
             "draw": [
-                ["EBONY*", "EBKID", "MUVOX", "TETAR"],
+                ["ARBEY*", "EBKID", "MUVOX", "TETAR"],
                 ["ALLEX*", "BAFDY", "MUVOX", "EBLUV", "EMBAX"],
                 ["MUVOX", "ODKAS"],
                 ["MUVOX", "LOGPO", "DUTIR", "LEROS"]
@@ -700,10 +700,10 @@
             },
             "body": ["BOOIN"],
             "rwy": {
-                "CYHZ05": [["PEPTA", "A50|S210-"], ["OBNOM", "A40+|S210-"], "#233"],
-                "CYHZ14": [["VIMLA", "A50|S210-"], ["IGVOP", "A40+|S210-"], "#323"],
-                "CYHZ23": [["LEROS", "A30+|S200-"]],
-                "CYHZ32": [["VOKIL", "A30+|S200-"]]
+                "YMML34": [],
+                "YMML27": [],
+                "YMML16": [],
+                "YMML09": []
             },
             "draw": [
                 ["AGMIR", "LIRLA", "VIMLA", "IGVOP"],
@@ -720,10 +720,10 @@
             },
             "body": ["BOYSE"],
             "rwy": {
-                "CYHZ05": [["PEPTA", "A50|S210-"], ["OBNOM", "A40+|S210-"], "#233"],
-                "CYHZ14": [["VIMLA", "A50|S210-"], ["IGVOP", "A40+|S210-"], "#323"],
-                "CYHZ23": [["LEROS", "A30+|S200-"]],
-                "CYHZ32": [["VOKIL", "A30+|S200-"]]
+                "YMML34": [],
+                "YMML27": [],
+                "YMML16": [],
+                "YMML09": [],
             },
             "draw": [
                 ["AGMIR", "LIRLA", "VIMLA", "IGVOP"],
@@ -740,10 +740,10 @@
             },
             "body": ["RAZZI"],
             "rwy": {
-                "CYHZ05": [["ODKAS", "A30+|S200-"]],
-                "CYHZ14": [["ILOTA", "A50|S210-"], ["MODIR", "A40+|S210-"], "DUNUB", "#323"],
-                "CYHZ23": ["OBNOM", ["RUDBU", "A50|S210-"], ["OTVUV", "A40+|S210-"], "#053"],
-                "CYHZ32": [["NOTUB", "A50|S230-"], ["EMBAX", "A40+|S210-"], "EBLIT", "#143"]
+                "YMML34": [],
+                "YMML27": [],
+                "YMML16": [],
+                "YMML09": []
             },
             "draw": [
                 ["TUSKY", "ETGAR", "ILOTA", "MODIR", "DUNUB"],
