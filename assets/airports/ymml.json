@@ -662,7 +662,7 @@
             "rwy": {
                 "YMML34": [["MEMEG", "A50+"], "DUDAB", ["OBGAL", "A30+"], ["AKDEL", "A25+|S185-"]],
                 "YMML27": [["KEELA", "A50+"], ["NOMID", "S230-"], ["ROCEL", "A40+"], ["VISAS", "S185-"]],
-                "YMML16": [["KEELA", "A50+"], "PASCO", ["JADEL", "A60+, A80-"], ["KIKEX", "S230"], ["NEFER", "A40+, A060-"], ["BELTA", "S185"]],
+                "YMML16": [["KEELA", "A50+"], "PASCO", ["JADEL", "A60+|A80-"], ["KIKEX", "S230"], ["NEFER", "A40+|A060-"], ["BELTA", "S185"]],
                 "YMML09": ["RIPMO", ["AVPIX", "A40+"], ["GUPUG", "A30+, A40-|S185-"]]
             },
             "draw": [
@@ -682,14 +682,14 @@
             "rwy": {
                 "YMML34": [["OVNER", "A60+"], "RENER", ["GOSKO", "S230"], "DUDAB", ["OBGAL", "A30+"], "AKDEL"],
                 "YMML27": [["LAKEP", "A60+"], ["BOBEL", "S230"], "DOKNO", ["VISAS", "S185-"]],
-                "YMML16": [["ARBEY", "A80+"], ["TUNKA", "A90-, A50+"], ["LASOL", "A40+"], "BELTA"],
-                "YMML09": [["ARBEY", "A80+"], ["TUNKA", "A90-, A50+"], ["DABUX", "S230"] ["OPAVA", "A60-"], ["UPKAN", "A40+"], ["GUPUG", "S185-", "A40-, A30+"]]
+                "YMML16": [["ARBEY", "A80+"], ["TUNKA", "A90-|A50+"], ["LASOL", "A40+"], "BELTA"],
+                "YMML09": [["ARBEY", "A80+"], ["TUNKA", "A90-|A50+"], ["DABUX", "S230"] ["OPAVA", "A60-"], ["UPKAN", "A40+"], ["GUPUG", "S185-|A40-|A30+"]]
             },
             "draw": [
-                ["ARBEY*", "EBKID", "MUVOX", "TETAR"],
-                ["ALLEX*", "BAFDY", "MUVOX", "EBLUV", "EMBAX"],
-                ["MUVOX", "ODKAS"],
-                ["MUVOX", "LOGPO", "DUTIR", "LEROS"]
+                ["ARBEY*", "TUNKA", "BELTA", "OVNER", "RENER", "GOSKO", "DUDAB"],
+                ["LAKEP", "BOBEL", "DOKNO", "VISAS"],
+                ["DUBAX", "OPAVA", "UPKAN", "GUPUG"],
+                ["LASOL", "BELTA"]
             ]
         },
         "BOOIN1A": {
@@ -700,10 +700,10 @@
             },
             "body": ["BOOIN"],
             "rwy": {
-                "YMML34": [],
+                "YMML34": [["IBARU", "A90+"], ["VEPUD", "A90-|A50+"], ["AKSID", "S230"], ["GOOLA", "A40+"], ["BOLTY", "A30+"], ["AKDEL", "S185-"]],
                 "YMML27": [],
                 "YMML16": [],
-                "YMML09": []
+                "YMML09": [["MAXAL", "A90+"], ["SEKNU", "A90-"], "ENSEG", "NEFER", ["BELTA", "A50+|S230"], ["OPAVA", "A60-"], ["UPKAN", "A40+"], ["GUPUG", "S185-|A40-|A30+"]]
             },
             "draw": [
                 ["AGMIR", "LIRLA", "VIMLA", "IGVOP"],
