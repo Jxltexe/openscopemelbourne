@@ -701,15 +701,15 @@
             "body": ["BOOIN"],
             "rwy": {
                 "YMML34": [["IBARU", "A90+"], ["VEPUD", "A90-|A50+"], ["AKSID", "S230"], ["GOOLA", "A40+"], ["BOLTY", "A30+"], ["AKDEL", "S185-"]],
-                "YMML27": [],
-                "YMML16": [],
+                "YMML27": [["ATPER", "A90+"], ["MAITE", "A90-|A50+|S230"], ["ENDUM", "A30+"], ["VISAS", "S185"]],
+                "YMML16": [["MAXAL", "A90+"], ["SEKNU", "A90-"], ["ENSEG", "A50+|S230"], ["NEFER", "A41+|A60-"], ["BELTA", "S185"]],
                 "YMML09": [["MAXAL", "A90+"], ["SEKNU", "A90-"], "ENSEG", "NEFER", ["BELTA", "A50+|S230"], ["OPAVA", "A60-"], ["UPKAN", "A40+"], ["GUPUG", "S185-|A40-|A30+"]]
             },
             "draw": [
-                ["AGMIR", "LIRLA", "VIMLA", "IGVOP"],
-                ["LIRLA", "VOKIL"],
-                ["LIRLA", "PEPTA", "OBNOM"],
-                ["LIRLA", "LEROS"]
+                ["BOOIN*", "IBARU", "VEPUD", "AKSID", "GOOLA", "BOLTY", "AKDEL"],
+                ["ATPER", "MAITE", "ENDUM", "VISAS"],
+                ["MAXAL", "SEKNU", "ENSEG", "NEFER", "BELTA"],
+                ["MAXAL", "SEKNU", "ENSEG", "NEFER", "BELTA", "OPAVA", "UPKAN", "GUPUG"]
             ]
         },
         "BOYSE9A": {
